@@ -12,6 +12,7 @@
                  v-if="isShowCancelLove" @cancel="cancelLove()" />
 
     <div ref="circle" @click="click" @mouseenter="mouseenter" @mouseleave="mouseleave"
+         v-longclick="() => click()"
          class="vclapbtn-bin animated infinite"
          :style="{boxShadow : isHover && isHaveBorder ? `${iconColor} 0 0 10px` : null,
                 border : isHaveBorder ? `1px solid ${iconColor}` : null,
@@ -42,6 +43,10 @@
   import IconStar from './icons/IconStar'
   import IconChips from './IconChips'
   import CancelLove from './CancelLove'
+  import Vue from 'vue'
+  import { longClickDirective } from 'vue-long-click'
+  const longClickInstance = longClickDirective({ delay: 400, interval: 100 })
+  Vue.directive('longclick', longClickInstance)
 
   export default {
     name: "vueClapButton",
@@ -118,6 +123,9 @@
       }
     },
     methods: {
+      mouseleave() {
+        this.isHover = false;
+      },
       mouseleave() {
         this.isHover = false;
       },
